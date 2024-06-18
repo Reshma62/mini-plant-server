@@ -10,6 +10,9 @@ const dataSchema = new Schema<IUser, IUserModel, IUserMethods>(
     email: {
       type: String,
     },
+    profileImage: {
+      type: String,
+    },
     password: {
       type: String,
       select: 0,

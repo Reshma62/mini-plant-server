@@ -1,3 +1,4 @@
+import { uploadImageController } from "../images/image.controller";
 import { IUser } from "./users.interface";
 import { UserModel } from "./users.model";
 export const createUserService = async (data: IUser) => {
@@ -6,6 +7,10 @@ export const createUserService = async (data: IUser) => {
   if (existsUser) {
     throw new Error("User already exists");
   }
+  const profileImage = uploadImageController;
+  console.log(profileImage);
+
+  data.profileImage = "test.png";
   const result = await UserModel.create(data);
   return result;
 };

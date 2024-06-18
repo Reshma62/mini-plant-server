@@ -12,6 +12,7 @@ export interface IUser {
   role: "admin" | "user";
   status: "in-progress" | "blocked";
   isDeleted: boolean;
+  profileImage: string;
 }
 
 // Instance methods and static methods both
