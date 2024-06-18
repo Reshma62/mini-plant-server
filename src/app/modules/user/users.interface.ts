@@ -8,6 +8,7 @@ export interface IUser {
   address: string;
   phone: string;
   needsPasswordChange: string;
+  passwordChangedAt: Date;
   role: "admin" | "user";
   status: "in-progress" | "blocked";
   isDeleted: boolean;
@@ -16,6 +17,10 @@ export interface IUser {
 // Instance methods and static methods both
 export interface IUserMethods {
   comparePassword(enteredPassword: string): Promise<boolean>;
+  isJWTIssuedBeforePasswordChanged(
+    passwordChangedTimestamp: Date,
+    jwtIssuedTimestamp: number
+  ): boolean;
 }
 
 export interface IUserModel

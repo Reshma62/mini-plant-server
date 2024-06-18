@@ -20,6 +20,9 @@ const dataSchema = new Schema<IUser, IUserModel, IUserMethods>(
     phone: {
       type: String,
     },
+    passwordChangedAt: {
+      type: Date,
+    },
 
     role: {
       type: String,
@@ -54,4 +57,13 @@ dataSchema.static("checkExistUser", async function (email: string) {
 dataSchema.method("comparePassword", async function (enteredPassword: string) {
   return await bcrypt.compare(enteredPassword, this.password);
 });
+
+dataSchema.statics.isJWTIssuedBeforePasswordChanged = function (
+  passwordChangedTimestamp: Date,
+  jwtIssuedTimestamp: number
+) {
+  const passwordChangedTime =
+    new Date(passwordChangedTimestamp).getTime() / 1000;
+  return passwordChangedTime > jwtIssuedTimestamp;
+};
 export const UserModel = model<IUser, IUserModel>("User", dataSchema);

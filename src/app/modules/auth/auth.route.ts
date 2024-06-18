@@ -6,6 +6,7 @@ import {
   createUserController,
   forgetPasswordController,
   loginController,
+  refreshTokenController,
   resetPasswordController,
 } from "./auth.controller";
 import { ValidateDataSchema } from "../../middleware/ValidateDataSchema";
@@ -41,6 +42,6 @@ _.post(
   auth("admin", "user"),
   changePasswordController
 );
-_.post("/refresh-token");
+_.post("/refresh-token", refreshTokenController);
 
 export const AuthRoutes = _;

@@ -21,7 +21,7 @@ export const createAccessToken = (user: User, expiresIn: any): string => {
 // Function to create a refresh token
 export const createRefreshToken = (user: User): string => {
   const refreshToken = jwt.sign(
-    { userId: user.userEmail },
+    { userEmail: user.userEmail },
     config.refreshTokenSecret,
     {
       expiresIn: "365d", // Token expires in 7 days

@@ -6,6 +6,7 @@ import {
   createUserService,
   forgetPasswordService,
   loginUserService,
+  refreshTokenService,
   resetPasswordService,
 } from "./auth.service";
 // create user controller
@@ -119,3 +120,23 @@ export const changePasswordController: RequestHandler = async (
 };
 
 // refresh token controller
+export const refreshTokenController: RequestHandler = async (
+  req,
+  res,
+  next
+) => {
+  try {
+    const { refreshToken } = req.cookies;
+    console.log(req.cookies, "req.cookies");
+    console.log(refreshToken, "refreshToken");
+    const result = await refreshTokenService(refreshToken);
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "Access token is created successfully",
+      data: result,
+    });
+  } catch (err) {
+    next(err);
+  }
+};

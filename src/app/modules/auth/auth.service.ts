@@ -9,6 +9,8 @@ import {
 import sendEmail from "../../utils/sendEmail";
 import config from "../../config";
 import { JwtPayload } from "jsonwebtoken";
+import AppError from "../../errors/AppError";
+import httpStatus from "http-status";
 // create user service
 export const createUserService = async (payload: IUser) => {
   const { email } = payload;
@@ -115,3 +117,29 @@ export const changePasswordService = async (
   return result;
 };
 // refresh token service
+
+export const refreshTokenService = async (token: string) => {
+  const decode = verifyToken(token, config.refreshTokenSecret);
+  const result = await UserModel.checkExistUser(decode.userEmail);
+  console.log(result, "result");
+  if (!result) {
+    throw new Error("User does not exist");
+  }
+  if (result.isDeleted) {
+    throw new Error("User has been deleted");
+  }
+  if (
+    result.passwordChangedAt &&
+    result.isJWTIssuedBeforePasswordChanged(
+      result.passwordChangedAt,
+      decode.iat as number
+    )
+  ) {
+    throw new AppError(httpStatus.UNAUTHORIZED, "You are not authorized !");
+  }
+  const accessToken = `Bearer ${createAccessToken(
+    { userEmail: result.email },
+    "1d"
+  )}`;
+  return accessToken;
+};
