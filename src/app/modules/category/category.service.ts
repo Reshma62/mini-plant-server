@@ -18,19 +18,16 @@ export const updateCategoryService = async (
   categoryId: string,
   payload: Partial<ICategory>
 ) => {
-  // Check if category exists
   const existingCategory = await CategoryModel.findById(categoryId);
   if (!existingCategory) {
     throw new Error("Category not found");
   }
 
   // Check if updating to a new categoryName that already exists
-  if (
-    payload.categoryName &&
-    payload.categoryName !== existingCategory.categoryName
-  ) {
+  if (payload.categoryName) {
     const duplicateCategory = await CategoryModel.findOne({
       categoryName: payload.categoryName,
+      _id: { $ne: categoryId },
     });
     if (duplicateCategory) {
       throw new Error("Category with this name already exists");
