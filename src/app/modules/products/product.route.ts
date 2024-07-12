@@ -1,8 +1,24 @@
 import { Router } from "express";
-import { createProductController } from "./product.controller";
 const _ = Router();
 // controller
+import {
+  createProductController,
+  deleteProductController,
+  getAllProductController,
+  getProductByIdController,
+} from "./product.controller";
+import { ValidateDataSchema } from "../../middleware/ValidateDataSchema";
+import { createProductSchema, updateProductSchema } from "./product.validation";
+
 // routes
-_.post("/", createProductController);
+_.post("/", ValidateDataSchema(createProductSchema), createProductController);
+_.patch(
+  "/:id",
+  ValidateDataSchema(updateProductSchema),
+  createProductController
+);
+_.get("/", getAllProductController);
+_.get("/:id", getProductByIdController);
+_.delete("/:id", deleteProductController);
 
 export const productRoutes = _;

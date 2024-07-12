@@ -27,16 +27,15 @@ const createCategoryService = (payload) => __awaiter(void 0, void 0, void 0, fun
 });
 exports.createCategoryService = createCategoryService;
 const updateCategoryService = (categoryId, payload) => __awaiter(void 0, void 0, void 0, function* () {
-    // Check if category exists
     const existingCategory = yield category_model_1.default.findById(categoryId);
     if (!existingCategory) {
         throw new Error("Category not found");
     }
     // Check if updating to a new categoryName that already exists
-    if (payload.categoryName &&
-        payload.categoryName !== existingCategory.categoryName) {
+    if (payload.categoryName) {
         const duplicateCategory = yield category_model_1.default.findOne({
             categoryName: payload.categoryName,
+            _id: { $ne: categoryId },
         });
         if (duplicateCategory) {
             throw new Error("Category with this name already exists");
