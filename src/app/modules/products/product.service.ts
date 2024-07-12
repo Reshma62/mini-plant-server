@@ -1,5 +1,7 @@
 // services/productService.ts
 
+import { getPaginateDataService } from "../../utils/getPaginateData";
+import { IQuery } from "../category/category.interface";
 import { IProduct } from "./product.interface";
 import ProductModel from "./product.model";
 
@@ -53,9 +55,16 @@ export const deleteProductService = async (productId: string) => {
   return deletedProduct;
 };
 
-export const getAllProductsService = async () => {
-  const products = await ProductModel.find({});
-  return products;
+export const getAllProductsService = async (query: IQuery) => {
+  const searchFields = ["name", "description"];
+  console.log(query, "query");
+  const { data, count } = await getPaginateDataService<IProduct>(
+    ProductModel,
+    query,
+    searchFields
+  );
+
+  return { data, count };
 };
 
 export const getProductByIdService = async (productId: string) => {
