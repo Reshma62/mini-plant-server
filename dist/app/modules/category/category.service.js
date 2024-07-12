@@ -13,6 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getAllCategoryService = exports.deleteCategoryService = exports.updateCategoryService = exports.createCategoryService = void 0;
+const getPaginateData_1 = require("../../utils/getPaginateData");
 const category_model_1 = __importDefault(require("./category.model"));
 const createCategoryService = (payload) => __awaiter(void 0, void 0, void 0, function* () {
     // Check if category already exists by categoryName
@@ -48,17 +49,22 @@ const updateCategoryService = (categoryId, payload) => __awaiter(void 0, void 0,
 exports.updateCategoryService = updateCategoryService;
 const deleteCategoryService = (categoryId) => __awaiter(void 0, void 0, void 0, function* () {
     // Check if category exists
-    const existingCategory = yield category_model_1.default.findById(categoryId);
+    const existingCategory = yield category_model_1.default.findOne({ _id: categoryId });
+    console.log(existingCategory, "existingCategory");
     if (!existingCategory) {
         throw new Error("Category not found");
     }
     // Perform the delete operation
-    const deletedCategory = yield category_model_1.default.findByIdAndDelete(categoryId);
+    const deletedCategory = yield category_model_1.default.findOneAndDelete({
+        _id: categoryId,
+    });
     return deletedCategory;
 });
 exports.deleteCategoryService = deleteCategoryService;
-const getAllCategoryService = () => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield category_model_1.default.find();
-    return result;
+const getAllCategoryService = (query) => __awaiter(void 0, void 0, void 0, function* () {
+    const searchFields = ["categoryName"];
+    console.log(query, "query");
+    const { data, count } = yield (0, getPaginateData_1.getPaginateDataService)(category_model_1.default, query, searchFields);
+    return { data, count };
 });
 exports.getAllCategoryService = getAllCategoryService;

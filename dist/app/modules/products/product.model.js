@@ -10,6 +10,6 @@ const productSchema = new mongoose_1.Schema({
     description: { type: String, required: true },
     rating: { type: Number, required: true },
     image: { type: String, required: true },
-});
+}, { timestamps: true });
 const ProductModel = (0, mongoose_1.model)("Product", productSchema);
 exports.default = ProductModel;

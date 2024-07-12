@@ -19,6 +19,7 @@ const category_service_1 = require("./category.service");
 const crateCategoryController = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const data = req.body;
+        console.log(data, "category data");
         const result = yield (0, category_service_1.createCategoryService)(data);
         (0, sendResponse_1.default)(res, {
             statusCode: http_status_1.default.OK,
@@ -35,6 +36,7 @@ exports.crateCategoryController = crateCategoryController;
 const updateCategoryController = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const categoryId = req.params.id;
+        console.log(categoryId, "category id");
         const data = req.body;
         const result = yield (0, category_service_1.updateCategoryService)(categoryId, data);
         (0, sendResponse_1.default)(res, {
@@ -67,7 +69,8 @@ const categoryDeleteController = (req, res, next) => __awaiter(void 0, void 0, v
 exports.categoryDeleteController = categoryDeleteController;
 const getAllCategoryController = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const result = yield (0, category_service_1.getAllCategoryService)();
+        const query = req.query;
+        const result = yield (0, category_service_1.getAllCategoryService)(query);
         (0, sendResponse_1.default)(res, {
             statusCode: http_status_1.default.OK,
             success: true,

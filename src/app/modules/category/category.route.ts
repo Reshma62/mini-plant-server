@@ -12,7 +12,7 @@ import {
 } from "./category.validation";
 const _ = Router();
 // controller
-_.post("/", ValidateDataSchema(createCategorySchema), crateCategoryController);
+_.post("/", crateCategoryController);
 _.patch(
   "/:id",
   ValidateDataSchema(updateCategorySchema),

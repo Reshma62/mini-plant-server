@@ -11,7 +11,11 @@ app.get("/", (req: Request, res: Response) => {
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors());
+app.use(
+  cors({
+    origin: ["http://localhost:5173", "https://nusery-frontend.vercel.app"],
+  })
+);
 app.use(router);
 app.use(globalErrorHandler);
 app.use(notFound);

@@ -1,4 +1,5 @@
-import { ICategory } from "./category.interface";
+import { getPaginateDataService } from "../../utils/getPaginateData";
+import { ICategory, IQuery } from "./category.interface";
 import CategoryModel from "./category.model";
 
 export const createCategoryService = async (payload: ICategory) => {
@@ -46,18 +47,28 @@ export const updateCategoryService = async (
 
 export const deleteCategoryService = async (categoryId: string) => {
   // Check if category exists
-  const existingCategory = await CategoryModel.findById(categoryId);
+  const existingCategory = await CategoryModel.findOne({ _id: categoryId });
+  console.log(existingCategory, "existingCategory");
   if (!existingCategory) {
     throw new Error("Category not found");
   }
 
   // Perform the delete operation
-  const deletedCategory = await CategoryModel.findByIdAndDelete(categoryId);
+  const deletedCategory = await CategoryModel.findOneAndDelete({
+    _id: categoryId,
+  });
 
   return deletedCategory;
 };
 
-export const getAllCategoryService = async () => {
-  const result = await CategoryModel.find();
-  return result;
+export const getAllCategoryService = async (query: IQuery) => {
+  const searchFields = ["categoryName"];
+  console.log(query, "query");
+  const { data, count } = await getPaginateDataService<ICategory>(
+    CategoryModel,
+    query,
+    searchFields
+  );
+
+  return { data, count };
 };

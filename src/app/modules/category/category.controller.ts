@@ -15,6 +15,7 @@ export const crateCategoryController: RequestHandler = async (
 ) => {
   try {
     const data = req.body;
+    console.log(data, "category data");
     const result = await createCategoryService(data);
     sendResponse(res, {
       statusCode: httpStatus.OK,
@@ -34,6 +35,7 @@ export const updateCategoryController: RequestHandler = async (
 ) => {
   try {
     const categoryId = req.params.id;
+    console.log(categoryId, "category id");
     const data = req.body;
     const result = await updateCategoryService(categoryId, data);
     sendResponse(res, {
@@ -72,7 +74,8 @@ export const getAllCategoryController: RequestHandler = async (
   next
 ) => {
   try {
-    const result = await getAllCategoryService();
+    const query = req.query;
+    const result = await getAllCategoryService(query);
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,
