@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getProductByIdService = exports.getAllProductsService = exports.deleteProductService = exports.updateProductService = exports.createProductService = void 0;
+const getPaginateData_1 = require("../../utils/getPaginateData");
 const product_model_1 = __importDefault(require("./product.model"));
 const createProductService = (payload) => __awaiter(void 0, void 0, void 0, function* () {
     const existingProduct = yield product_model_1.default.findOne({ title: payload.title });
@@ -53,9 +54,11 @@ const deleteProductService = (productId) => __awaiter(void 0, void 0, void 0, fu
     return deletedProduct;
 });
 exports.deleteProductService = deleteProductService;
-const getAllProductsService = () => __awaiter(void 0, void 0, void 0, function* () {
-    const products = yield product_model_1.default.find({});
-    return products;
+const getAllProductsService = (query) => __awaiter(void 0, void 0, void 0, function* () {
+    const searchFields = ["name", "description"];
+    console.log(query, "query");
+    const { data, count } = yield (0, getPaginateData_1.getPaginateDataService)(product_model_1.default, query, searchFields);
+    return { data, count };
 });
 exports.getAllProductsService = getAllProductsService;
 const getProductByIdService = (productId) => __awaiter(void 0, void 0, void 0, function* () {

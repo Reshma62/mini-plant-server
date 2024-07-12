@@ -73,7 +73,8 @@ export const getAllProductController: RequestHandler = async (
   next
 ) => {
   try {
-    const result = await getAllProductsService();
+    const query = req.query;
+    const result = await getAllProductsService(query);
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,

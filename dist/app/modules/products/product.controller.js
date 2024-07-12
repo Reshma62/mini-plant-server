@@ -67,7 +67,8 @@ const deleteProductController = (req, res, next) => __awaiter(void 0, void 0, vo
 exports.deleteProductController = deleteProductController;
 const getAllProductController = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const result = yield (0, product_service_1.getAllProductsService)();
+        const query = req.query;
+        const result = yield (0, product_service_1.getAllProductsService)(query);
         (0, sendResponse_1.default)(res, {
             statusCode: http_status_1.default.OK,
             success: true,
