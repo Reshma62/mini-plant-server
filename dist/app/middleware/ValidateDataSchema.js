@@ -14,7 +14,7 @@ const ValidateDataSchema = (schema) => {
     return (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
         const body = req.body;
         try {
-            yield schema.parseAsync({ body, cookies: req.cookies });
+            yield schema.parseAsync(body);
             next();
         }
         catch (err) {
