@@ -24,16 +24,17 @@ export const updateProductService = async (
     throw new Error("Product not found");
   }
 
-  // Check if updating to a new title that already exists
-  if (payload.title) {
-    const duplicateProduct = await ProductModel.findOne({
-      title: payload.title,
-      _id: { $ne: productId },
-    });
-    if (duplicateProduct) {
-      throw new Error("Product with this title already exists");
-    }
-  }
+
+   const duplicateProduct = await ProductModel.findOne({
+     title: payload.title,
+     _id: { $ne: productId }, // Exclude the current product by ID
+   });
+   if (duplicateProduct) {
+     throw new Error("Product with this title already exists");
+   }
+   console.log(duplicateProduct, "duplicateProduct");
+
+ 
 
   // Perform the update
   const updatedProduct = await ProductModel.findByIdAndUpdate(

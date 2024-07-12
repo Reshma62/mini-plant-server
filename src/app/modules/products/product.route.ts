@@ -6,6 +6,7 @@ import {
   deleteProductController,
   getAllProductController,
   getProductByIdController,
+  updateProductController,
 } from "./product.controller";
 import { ValidateDataSchema } from "../../middleware/ValidateDataSchema";
 import { createProductSchema, updateProductSchema } from "./product.validation";
@@ -15,7 +16,7 @@ _.post("/", ValidateDataSchema(createProductSchema), createProductController);
 _.patch(
   "/:id",
   ValidateDataSchema(updateProductSchema),
-  createProductController
+  updateProductController
 );
 _.get("/", getAllProductController);
 _.get("/:id", getProductByIdController);
