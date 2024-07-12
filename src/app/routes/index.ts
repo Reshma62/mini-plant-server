@@ -1,23 +1,22 @@
 import { Router } from "express";
-import { UsersRoutes } from "../modules/user/users.route";
-// import { StudentsRoutes } from "../modules/students/students.route";
-import { AuthRoutes } from "../modules/auth/auth.route";
-import { ImagesRoutes } from "../modules/images/image.route";
+import { productRoutes } from "../modules/products/product.route";
+import { imageRoutes } from "../modules/images/images.route";
+import { categoryRoutes } from "../modules/category/category.route";
 
 const router = Router();
 
 const moduleRoutes = [
   {
-    path: "/api/users",
-    route: UsersRoutes,
+    path: "/api/category",
+    route: categoryRoutes,
   },
   {
-    path: "/api/auth",
-    route: AuthRoutes,
+    path: "/api/product",
+    route: productRoutes,
   },
   {
     path: "/api/images",
-    route: ImagesRoutes,
+    route: imageRoutes,
   },
 ];
 

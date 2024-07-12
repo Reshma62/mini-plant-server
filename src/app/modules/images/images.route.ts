@@ -1,5 +1,6 @@
 import { Router } from "express";
-
 const _ = Router();
+// controller
+// routes
 
-export const UsersRoutes = _;
+export const imageRoutes = _;
