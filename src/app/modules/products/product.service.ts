@@ -10,4 +10,19 @@ export const createProductService = async (payload: IProduct) => {
 
   const result = await ProductModel.create(payload);
   return result;
-};
+}; 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
